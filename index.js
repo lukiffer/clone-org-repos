@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const colors = require('colors/safe');
 const argv = require('yargs').argv;
 const exec = require('child_process').exec;
