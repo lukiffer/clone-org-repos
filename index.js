@@ -23,12 +23,17 @@ class OrgRepoCloneUtil {
     this.gitSshCommand = `export GIT_SSH_COMMAND='ssh -i "${ sshKeyPath }" -F /dev/null -o "IdentitiesOnly true"';`;
   }
 
-  async clone(org, targetPath) {
+  async clone(opts) {
+    const { org, targetPath, excludeForks } = opts;
     console.log(`Enumerating repositories in the ${ colors.bold(org) } organization...`);
     const repos = await this.getRepositories(org);
     console.log(colors.cyan(`Found ${ colors.bold(repos.length) } repositories.`));
 
     for (const repo of repos) {
+      if (repo.fork && excludeForks) {
+        console.log(colors.yellow(`Skipping forked repository ${ colors.bold(repo.name) }.`));
+        continue;
+      }
       console.log(`Cloning ${ colors.cyan.bold(repo.name) } from ${ colors.magenta(repo.ssh_url) }...`);
       await this.cloneRepository(repo, targetPath);
       console.log(colors.green('Clone complete!'));
@@ -140,9 +145,14 @@ async function main() {
 
   const sshKeyPath = argv['ssh-key'] || '$HOME/.ssh/id_rsa';
   const targetPath = argv['target-path'] || '.';
+  const excludeForks = !!argv['exclude-forks'];
 
   const service = new OrgRepoCloneUtil(sshKeyPath);
-  await service.clone(argv.org, targetPath);
+  await service.clone({
+    org: argv.org,
+    targetPath,
+    excludeForks,
+  });
 }
 
 main().then(() => {

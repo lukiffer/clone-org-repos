@@ -24,5 +24,13 @@ npx @lukiffer/clone-org-repos --org "<ORG_NAME>" --target-path "/path/to/destina
 By default, `~/.ssh/id_rsa` will be used. To use a different key, specify the `--ssh-key` argument.
 
 ```bash
-npx @lukiffer@clone-org-repos --org "<ORG_NAME>" --ssh-key "/path/to/.ssh/key"
+npx @lukiffer/clone-org-repos --org "<ORG_NAME>" --ssh-key "/path/to/.ssh/key"
+```
+
+### Skip Forked Repositories
+
+Skip cloning forked repositories using the `--exclude-forks` argument.
+
+```bash
+npx @lukiffer/clone-org-repos --org "<ORG_NAME>" --exclude-forks
 ```
