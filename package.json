@@ -1,6 +1,6 @@
 {
   "name": "@lukiffer/clone-org-repos",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple utility script to clone all of an organization's repositories and branches therein.",
   "main": "index.js",
   "bin": {

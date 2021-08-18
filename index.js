@@ -128,7 +128,7 @@ class OrgRepoCloneUtil {
   async pullBranch(repoPath, branchName) {
     return new Promise((resolve, reject) => {
       this.gitExec('git fetch --all && ' +
-        `git checkout --track origin/${ branchName } && ` +
+        `git checkout --track origin/${ branchName } || git checkout ${ branchName } && ` +
         'git submodule update --init --recursive && ' +
         'git pull', repoPath, resolve, reject);
     });
